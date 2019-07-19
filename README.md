@@ -23,4 +23,9 @@ Runtime progress can be monitored in the 'reports' subdirectory. Each experiment
 5) In the 'analysis' subdirectory, run the 'main_performance_ensemble_only.py' or 'main_performance.py' scripts to get ensemble performance statistics or basin performance statistics, respectively. These statistics are stored in the './analysis/stats' subdirectory.
 
 6) Run the matlab script 'main_plots.m' in the 'analysis' subdirectory to make plots like what are in the paper. Figures are stored in the './analysis/figures/' subdirectory.
- 
+
+## Contact
+Frederik Kratzert: kratzert@ml.jku.at
+
+## License of our code
+[Apache License 2.0](https://github.com/kratzert/ealstm_regional_modeling/blob/master/LICENSE)
