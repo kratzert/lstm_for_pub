@@ -18,8 +18,8 @@ import pandas as pd
 import torch
 from torch.utils.data import Dataset
 
-from .datautils import (load_attributes, load_discharge, load_forcing, normalize_features,
-                        reshape_data)
+from .datautils import (load_attributes, load_discharge, load_forcing,
+                        normalize_features, reshape_data)
 
 
 class CamelsTXT(Dataset):

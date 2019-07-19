@@ -15,8 +15,9 @@ import sys
 import numpy as np
 import pandas as pd
 
-from performance_functions import (baseflow_index, bias, flow_duration_curve, get_quant, high_flows,
-                                   low_flows, nse, stdev_rat, zero_freq)
+from performance_functions import (baseflow_index, bias, flow_duration_curve,
+                                   get_quant, high_flows, low_flows, nse,
+                                   stdev_rat, zero_freq)
 
 # file name of ensemble dictionary is a user input
 experiment = sys.argv[1]
