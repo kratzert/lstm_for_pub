@@ -1,4 +1,13 @@
-"""TODO: DocString"""
+"""
+This file is part of the accompanying code to our manuscript:
+
+Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., & Nearing, G. S. ( 2019). 
+Toward improved predictions in ungauged basins: Exploiting the power of machine learning.
+Water Resources Research, 55. https://doi.org/10.1029/2019WR026065 
+
+You should have received a copy of the Apache-2.0 license along with the code. If not,
+see <https://opensource.org/licenses/Apache-2.0>
+"""
 import sys
 from pathlib import Path, PosixPath
 from typing import List
@@ -43,41 +52,46 @@ def create_h5_files(camels_root: PosixPath,
         raise FileExistsError(f"File already exists at {out_file}")
 
     with h5py.File(out_file, 'w') as out_f:
-        input_data = out_f.create_dataset('input_data',
-                                          shape=(0, seq_length, 5),
-                                          maxshape=(None, seq_length, 5),
-                                          chunks=True,
-                                          dtype=np.float32,
-                                          compression='gzip')
-        target_data = out_f.create_dataset('target_data',
-                                           shape=(0, 1),
-                                           maxshape=(None, 1),
-                                           chunks=True,
-                                           dtype=np.float32,
-                                           compression='gzip')
+        input_data = out_f.create_dataset(
+            'input_data',
+            shape=(0, seq_length, 5),
+            maxshape=(None, seq_length, 5),
+            chunks=True,
+            dtype=np.float32,
+            compression='gzip')
+        target_data = out_f.create_dataset(
+            'target_data',
+            shape=(0, 1),
+            maxshape=(None, 1),
+            chunks=True,
+            dtype=np.float32,
+            compression='gzip')
 
-        q_stds = out_f.create_dataset('q_stds',
-                                      shape=(0, 1),
-                                      maxshape=(None, 1),
-                                      dtype=np.float32,
-                                      compression='gzip',
-                                      chunks=True)
+        q_stds = out_f.create_dataset(
+            'q_stds',
+            shape=(0, 1),
+            maxshape=(None, 1),
+            dtype=np.float32,
+            compression='gzip',
+            chunks=True)
 
         if with_basin_str:
-            sample_2_basin = out_f.create_dataset('sample_2_basin',
-                                                  shape=(0, ),
-                                                  maxshape=(None, ),
-                                                  dtype="S10",
-                                                  compression='gzip',
-                                                  chunks=True)
+            sample_2_basin = out_f.create_dataset(
+                'sample_2_basin',
+                shape=(0,),
+                maxshape=(None,),
+                dtype="S10",
+                compression='gzip',
+                chunks=True)
 
         for basin in tqdm(basins, file=sys.stdout):
 
-            dataset = CamelsTXT(camels_root=camels_root,
-                                basin=basin,
-                                is_train=True,
-                                seq_length=seq_length,
-                                dates=dates)
+            dataset = CamelsTXT(
+                camels_root=camels_root,
+                basin=basin,
+                is_train=True,
+                seq_length=seq_length,
+                dates=dates)
 
             num_samples = len(dataset)
             total_samples = input_data.shape[0] + num_samples
@@ -94,7 +108,7 @@ def create_h5_files(camels_root: PosixPath,
             q_stds[-num_samples:, :] = q_std_array
 
             if with_basin_str:
-                sample_2_basin.resize((total_samples, ))
+                sample_2_basin.resize((total_samples,))
                 str_arr = np.array([basin.encode("ascii", "ignore")] * num_samples)
                 sample_2_basin[-num_samples:] = str_arr
 

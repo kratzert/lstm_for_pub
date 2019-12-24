@@ -1,9 +1,9 @@
 """
 This file is part of the accompanying code to our manuscript:
 
-Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., Nearing, G., "Prediction 
-in Ungauged Basins with Long Short-Term Memory Networks". submitted to Water Resources Research 
-(2019)
+Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., & Nearing, G. S. ( 2019). 
+Toward improved predictions in ungauged basins: Exploiting the power of machine learning.
+Water Resources Research, 55. https://doi.org/10.1029/2019WR026065 
 
 You should have received a copy of the Apache-2.0 license along with the code. If not,
 see <https://opensource.org/licenses/Apache-2.0>
@@ -204,11 +204,11 @@ def get_pvals(metrics: dict, model1: str, model2: str) -> Tuple[List, float]:
     p_vals = []
     for seed1 in seeds1:
         for seed2 in seeds2:
-            _, p_val = ttest_ind(list(metrics[model1][seed1].values()),
-                                 list(metrics[model2][seed2].values()))
+            _, p_val = ttest_ind(
+                list(metrics[model1][seed1].values()), list(metrics[model2][seed2].values()))
             p_vals.append(p_val)
 
     # p-value between ensemble means
-    _, p_val = ttest_ind(list(metrics[model1]["ensemble"].values()),
-                         list(metrics[model2]["ensemble"].values()))
+    _, p_val = ttest_ind(
+        list(metrics[model1]["ensemble"].values()), list(metrics[model2]["ensemble"].values()))
     return p_vals, p_val

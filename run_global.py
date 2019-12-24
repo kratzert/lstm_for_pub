@@ -1,14 +1,13 @@
 """
 This file is part of the accompanying code to our manuscript:
 
-Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., Nearing, G., "Prediction 
-in Ungauged Basins with Long Short-Term Memory Networks". submitted to Water Resources Research 
-(2019)
+Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., & Nearing, G. S. ( 2019). 
+Toward improved predictions in ungauged basins: Exploiting the power of machine learning.
+Water Resources Research, 55. https://doi.org/10.1029/2019WR026065 
 
 You should have received a copy of the Apache-2.0 license along with the code. If not,
 see <https://opensource.org/licenses/Apache-2.0>
 """
-
 
 import glob
 import os
@@ -53,11 +52,12 @@ for seed in range(firstSeed, firstSeed + nSeeds):  # loop through randomized ens
         ens_dict = seed_dict
     else:
         for basin in seed_dict:
-            ens_dict[basin] = pd.merge(ens_dict[basin],
-                                       seed_dict[basin][f"qsim_{seed}"],
-                                       how='inner',
-                                       left_index=True,
-                                       right_index=True)
+            ens_dict[basin] = pd.merge(
+                ens_dict[basin],
+                seed_dict[basin][f"qsim_{seed}"],
+                how='inner',
+                left_index=True,
+                right_index=True)
 
 # --- end of seed loop -----------------------------------------
 

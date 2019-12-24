@@ -1,9 +1,9 @@
 """
 This file is part of the accompanying code to our manuscript:
 
-Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., Nearing, G., "Prediction 
-in Ungauged Basins with Long Short-Term Memory Networks". submitted to Water Resources Research 
-(2019)
+Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., & Nearing, G. S. ( 2019). 
+Toward improved predictions in ungauged basins: Exploiting the power of machine learning.
+Water Resources Research, 55. https://doi.org/10.1029/2019WR026065 
 
 You should have received a copy of the Apache-2.0 license along with the code. If not,
 see <https://opensource.org/licenses/Apache-2.0>
@@ -42,6 +42,7 @@ SCALER = {
     'output_mean': np.array([1.49996196]),
     'output_std': np.array([3.62443672])
 }
+
 
 def add_camels_attributes(camels_root: PosixPath, db_path: str = None):
     """Load catchment characteristics from txt files and store them in a sqlite3 table
@@ -258,8 +259,8 @@ def load_forcing(camels_root: PosixPath, basin: str) -> Tuple[pd.DataFrame, int]
     RuntimeError
         If not forcing file was found.
     """
-#    forcing_path = camels_root / 'basin_mean_forcing' / 'maurer_extended'
-#    forcing_path = camels_root / 'basin_mean_forcing' / 'nldas'
+    #    forcing_path = camels_root / 'basin_mean_forcing' / 'maurer_extended'
+    #    forcing_path = camels_root / 'basin_mean_forcing' / 'nldas'
     forcing_path = camels_root / 'basin_mean_forcing' / 'nldas_extended'
     files = list(forcing_path.glob('**/*_forcing_leap.txt'))
     file_path = [f for f in files if f.name[:8] == basin]

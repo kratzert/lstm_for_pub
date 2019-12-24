@@ -1,12 +1,12 @@
 # Long Short-Term Memory networks for Prediction in Ungauged Basins:
 
-Accompanying code for our WRR submission "Prediction in Ungauged Basins with Long Short-Term Memory Networks"
+Accompanying code for our WRR submission ["Toward Improved Predictions in Ungauged Basins: Exploiting the Power of Machine Learning"](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2019WR026065)
 
 # Steps to Recreate Results from Paper:
 
 1) Get CAMELS data from {https://ral.ucar.edu/solutions/products/camels}. The filepath must be: './data/basin_dataset_public_v1p2' and must include the CAMELS attributes as a subdirectory: './data/basin_dataset_public_v1p2/camels_attributes_v2.0'.
 
-2) Download the updated NLDAS forcings from [HydroShare](). These include daily min and max temperature, compared to the CAMELS NLDAS forcings that only contain daily mean temperature.
+2) Download the updated NLDAS forcings from [HydroShare](https://www.hydroshare.org/resource/0a68bfd7ddf642a8be9041d60f40868c/). These include daily min and max temperature, compared to the CAMELS NLDAS forcings that only contain daily mean temperature.
 
 3) Run the training scripts: 'train_global.sh' or 'train_pub.sh'. Options for the global script are: (i) the model type: 'lstm' or 'ealstm' (ref HESSD paper here), and (ii) the option to use catchment attributes as static input features: 'static' or 'no_static'. Options for the PUB training script are just the model type, since PUB requires catchment attributes.
 
@@ -26,6 +26,25 @@ Runtime progress can be monitored in the 'reports' subdirectory. Each experiment
 
 ## Contact
 Frederik Kratzert: kratzert@ml.jku.at
+
+## Citation
+
+If you use any of this code in your experiments, please make sure to cite the following publication
+
+**Note**: At this point, the paper is accepted, yet online online as preview and no further information about the volumne and pages are available. Check the [WRR Homepage](https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2019WR026065) for an update of the citation.
+
+```
+@article{kratzert2019pub,
+author = {Kratzert, Frederik and Klotz, Daniel and Herrnegger, Mathew and Sampson, Alden K. and Hochreiter, Sepp and Nearing, Grey S.},
+title = {Toward Improved Predictions in Ungauged Basins: Exploiting the Power of Machine Learning},
+journal = {Water Resources Research},
+volume = {n/a},
+number = {n/a},
+pages = {},
+doi = {10.1029/2019WR026065}
+}
+
+```
 
 ## License of our code
 [Apache License 2.0](https://github.com/kratzert/ealstm_regional_modeling/blob/master/LICENSE)

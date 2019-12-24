@@ -1,9 +1,9 @@
 """
 This file is part of the accompanying code to our manuscript:
 
-Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., Nearing, G., "Prediction 
-in Ungauged Basins with Long Short-Term Memory Networks". submitted to Water Resources Research 
-(2019)
+Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., & Nearing, G. S. ( 2019). 
+Toward improved predictions in ungauged basins: Exploiting the power of machine learning.
+Water Resources Research, 55. https://doi.org/10.1029/2019WR026065 
 
 You should have received a copy of the Apache-2.0 license along with the code. If not,
 see <https://opensource.org/licenses/Apache-2.0>
@@ -59,6 +59,7 @@ GLOBAL_SETTINGS = {
 # Prepare run #
 ###############
 
+
 def str2bool(v):
     if isinstance(v, bool):
         return v
@@ -68,6 +69,7 @@ def str2bool(v):
         return False
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
+
 
 def get_args() -> Dict:
     """Parse input arguments
@@ -80,8 +82,8 @@ def get_args() -> Dict:
     parser = argparse.ArgumentParser()
     parser.add_argument('mode', choices=["train", "evaluate", "eval_robustness", "create_splits"])
     parser.add_argument(
-        '--camels_root', 
-        type=str, 
+        '--camels_root',
+        type=str,
         default='./data/basin_dataset_public_v1p2/',
         help="Root directory of CAMELS data set")
     parser.add_argument('--seed', type=int, required=False, help="Random seed")
@@ -92,15 +94,9 @@ def get_args() -> Dict:
         default=-1,
         help="User-selected GPU ID - if none chosen, will default to cpu")
     parser.add_argument(
-        '--cache_data', 
-        type=str2bool, 
-        default=True, 
-        help="If True, loads all data into memory")
+        '--cache_data', type=str2bool, default=True, help="If True, loads all data into memory")
     parser.add_argument(
-        '--num_workers', 
-        type=int, 
-        default=12, 
-        help="Number of parallel threads for data loading")
+        '--num_workers', type=int, default=12, help="Number of parallel threads for data loading")
     parser.add_argument(
         '--no_static',
         type=str2bool,
@@ -152,7 +148,7 @@ def get_args() -> Dict:
     else:
         device = 'cpu'
 
-    global DEVICE 
+    global DEVICE
     DEVICE = torch.device(device if torch.cuda.is_available() else "cpu")
 
     # combine global settings with user config
@@ -286,7 +282,6 @@ class Model(nn.Module):
         self.concat_static = concat_static
         self.no_static = no_static
 
-        
         self.lstm = LSTM(
             input_size=input_size_dyn,
             hidden_size=hidden_size,

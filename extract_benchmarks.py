@@ -1,9 +1,9 @@
 """
 This file is part of the accompanying code to our manuscript:
 
-Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., Nearing, G., "Prediction 
-in Ungauged Basins with Long Short-Term Memory Networks". submitted to Water Resources Research 
-(2019)
+Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., & Nearing, G. S. ( 2019). 
+Toward improved predictions in ungauged basins: Exploiting the power of machine learning.
+Water Resources Research, 55. https://doi.org/10.1029/2019WR026065 
 
 You should have received a copy of the Apache-2.0 license along with the code. If not,
 see <https://opensource.org/licenses/Apache-2.0>
@@ -16,8 +16,6 @@ import pandas as pd
 
 SCE_SEEDS = ['05', '11', '27', '33', '48', '59', '66', '72', '80', '94']
 
-#val_start = pd.to_datetime('01101999', format='%d%m%Y')
-#val_end = pd.to_datetime('30092014', format='%d%m%Y')
 val_start = pd.to_datetime('01101995', format='%d%m%Y')
 val_end = pd.to_datetime('30092010', format='%d%m%Y')
 
@@ -86,8 +84,9 @@ assert meta_df['gauge_id'].equals(
     char_df['gauge_id'])  # check catchmenet chars & metdata have the same basins
 assert meta_df['lat'].equals(char_df['gauge_lat'])  # check that latitudes and longitudes match
 assert meta_df['lng'].equals(char_df['gauge_lon'])
-static_df = char_df.join(meta_df.set_index('gauge_id'),
-                         on='gauge_id')  # turn into a single dataframe (only need huc from meta)
+static_df = char_df.join(
+    meta_df.set_index('gauge_id'),
+    on='gauge_id')  # turn into a single dataframe (only need huc from meta)
 nBasins = static_df.shape[0]  # count number of basins
 
 # --- SAC-SMA Model ----------------------------------------------------
@@ -110,16 +109,11 @@ for basin in basin_list:
         # load this seed's data and store in a basin-specific dataframe
         idx = np.where(meta_df['gauge_str'].values == basin)[0][0]
         fname = f"data/model_output_nldas/{meta_df.loc[idx, 'huc2']}/{meta_df.loc[idx, 'gauge_str']}_{SCE_SEEDS[sdex]}_model_output.txt"
-        temp_df = pd.read_table(fname,
-                                delimiter='\s+',
-                                parse_dates={'date': [0, 1, 2]},
-                                index_col='date')
+        temp_df = pd.read_table(
+            fname, delimiter='\s+', parse_dates={'date': [0, 1, 2]}, index_col='date')
         temp_df.rename(columns={'MOD_RUN': f"qsim_{sdex}"}, inplace=True)
-        basin_df = pd.merge(basin_df,
-                            temp_df[f"qsim_{sdex}"],
-                            how='inner',
-                            left_index=True,
-                            right_index=True)
+        basin_df = pd.merge(
+            basin_df, temp_df[f"qsim_{sdex}"], how='inner', left_index=True, right_index=True)
 
     # calculate the ensemble mean
     ensMean = basin_df.filter(regex='qsim_').mean(axis=1)
@@ -174,11 +168,8 @@ for basin in basin_list:
 
     # pull observation column
     basin_df = master_dict[basin].filter(['qobs'])
-    basin_df = pd.merge(basin_df,
-                        nwm_df[idx]['NWM_RUN'],
-                        how='inner',
-                        left_index=True,
-                        right_index=True)
+    basin_df = pd.merge(
+        basin_df, nwm_df[idx]['NWM_RUN'], how='inner', left_index=True, right_index=True)
 
     # normalize by catchment area
     a = basin_df['NWM_RUN'].values

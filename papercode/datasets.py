@@ -1,9 +1,9 @@
 """
 This file is part of the accompanying code to our manuscript:
 
-Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., Nearing, G., "Prediction 
-in Ungauged Basins with Long Short-Term Memory Networks". submitted to Water Resources Research 
-(2019)
+Kratzert, F., Klotz, D., Herrnegger, M., Sampson, A. K., Hochreiter, S., & Nearing, G. S. ( 2019). 
+Toward improved predictions in ungauged basins: Exploiting the power of machine learning.
+Water Resources Research, 55. https://doi.org/10.1029/2019WR026065 
 
 You should have received a copy of the Apache-2.0 license along with the code. If not,
 see <https://opensource.org/licenses/Apache-2.0>
@@ -18,8 +18,8 @@ import pandas as pd
 import torch
 from torch.utils.data import Dataset
 
-from .datautils import (load_attributes, load_discharge, load_forcing,
-                        normalize_features, reshape_data)
+from .datautils import (load_attributes, load_discharge, load_forcing, normalize_features,
+                        reshape_data)
 
 
 class CamelsTXT(Dataset):
@@ -118,8 +118,8 @@ class CamelsTXT(Dataset):
         x = np.array([
             df['PRCP(mm/day)'].values, df['SRAD(W/m2)'].values, df['Tmax(C)'].values,
             df['Tmin(C)'].values, df['Vp(Pa)'].values
-#            df['prcp(mm/day)'].values, df['srad(W/m2)'].values, df['tmax(C)'].values,
-#            df['tmin(C)'].values, df['vp(Pa)'].values
+            #            df['prcp(mm/day)'].values, df['srad(W/m2)'].values, df['tmax(C)'].values,
+            #            df['tmin(C)'].values, df['vp(Pa)'].values
         ]).T
 
         y = np.array([df['QObs(mm/d)'].values]).T
@@ -136,7 +136,9 @@ class CamelsTXT(Dataset):
 
             # Delete all samples, where discharge is NaN
             if np.sum(np.isnan(y)) > 0:
-                print(f"Deleted {np.sum(np.isnan(y))} of {len(y)} records because of NaNs in basin {self.basin}")
+                print(
+                    f"Deleted {np.sum(np.isnan(y))} of {len(y)} records because of NaNs in basin {self.basin}"
+                )
                 x = np.delete(x, np.argwhere(np.isnan(y)), axis=0)
                 y = np.delete(y, np.argwhere(np.isnan(y)), axis=0)
 
