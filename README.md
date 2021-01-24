@@ -4,7 +4,7 @@ Accompanying code for our WRR submission ["Toward Improved Predictions in Ungaug
 
 # Steps to Recreate Results from Paper:
 
-1) Get CAMELS data from {https://ral.ucar.edu/solutions/products/camels}. The filepath must be: './data/basin_dataset_public_v1p2' and must include the CAMELS attributes as a subdirectory: './data/basin_dataset_public_v1p2/camels_attributes_v2.0'.
+1) Get CAMELS data from [https://ral.ucar.edu/solutions/products/camels](https://ral.ucar.edu/solutions/products/camels). The filepath must be: './data/basin_dataset_public_v1p2' and must include the CAMELS attributes as a subdirectory: './data/basin_dataset_public_v1p2/camels_attributes_v2.0'.
 
 2) Download the updated NLDAS forcings from [HydroShare](https://www.hydroshare.org/resource/0a68bfd7ddf642a8be9041d60f40868c/). These include daily min and max temperature, compared to the CAMELS NLDAS forcings that only contain daily mean temperature.
 
